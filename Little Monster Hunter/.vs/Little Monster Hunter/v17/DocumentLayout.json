@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Main.cpp",
+              "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp",
+              "RelativeDocumentMoniker": "Little Monster Hunter\\Main.cpp",
+              "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp",
+              "RelativeToolTip": "Little Monster Hunter\\Main.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-10-02T04:54:04.164Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

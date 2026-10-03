@@ -11,15 +11,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	VECTOR cameraPos = VGet(0, 500, -1000);
 	VECTOR cameraPoint = VGet(0, 0, 0);
+	
 
 	// ÉÅÉCÉìÉãÅ[Év
 	while (ProcessMessage() == 0)
 	{
+		VECTOR move = VGet(0, 0, 0);
 		if(CheckHitKey(KEY_INPUT_W))
 		{
-			cameraPos.z += 10;
-			cameraPoint.z += 10;
+			move.z += 10;
 		}
+		if (CheckHitKey(KEY_INPUT_S))
+		{
+			move.z -= 10;
+		}
+		if (CheckHitKey(KEY_INPUT_A))
+		{
+			move.x -= 10;
+		}
+		if (CheckHitKey(KEY_INPUT_D))
+		{
+			move.x += 10;
+		}
+		cameraPos = VAdd(cameraPos, move);
+		cameraPoint = VAdd(cameraPoint, move);
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		DrawLine3D(VGet(-100, 0, 0), VGet(100, 0, 0), GetColor(255, 0, 0));

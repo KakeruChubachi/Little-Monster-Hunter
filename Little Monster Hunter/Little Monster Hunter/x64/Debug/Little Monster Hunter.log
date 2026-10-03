@@ -1,6 +1,2 @@
 ﻿  Main.cpp
-D:\MyClass\2026\Personal production\Little Monster Hunter\Little Monster Hunter\Little Monster Hunter\Main.cpp(43,29): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-D:\MyClass\2026\Personal production\Little Monster Hunter\Little Monster Hunter\Little Monster Hunter\Main.cpp(43,46): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-D:\MyClass\2026\Personal production\Little Monster Hunter\Little Monster Hunter\Little Monster Hunter\Main.cpp(47,20): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
-D:\MyClass\2026\Personal production\Little Monster Hunter\Little Monster Hunter\Little Monster Hunter\Main.cpp(47,38): warning C4244: '引数': 'int' から 'float' への変換です。データが失われる可能性があります。
   Little Monster Hunter.vcxproj -> D:\MyClass\2026\Personal production\Little Monster Hunter\Little Monster Hunter\x64\Debug\Little Monster Hunter.exe

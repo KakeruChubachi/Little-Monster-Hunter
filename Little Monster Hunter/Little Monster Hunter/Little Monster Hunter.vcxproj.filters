@@ -24,10 +24,16 @@
     <ClCompile Include="Main.cpp">
       <Filter>PlayScene</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>PlayScene\ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GridLine.h">
       <Filter>PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>PlayScene\ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

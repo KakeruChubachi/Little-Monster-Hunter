@@ -14,6 +14,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	VECTOR cameraPos = VGet(0, 500, -1000);
 	VECTOR cameraPoint = VGet(0, 0, 0);
+	VECTOR offset = VGet(0, 500, -1000);
+	VECTOR playerPos = VGet(0, 0, 0);
 	
 	GridLine gridLine;
 	Player player;
@@ -21,26 +23,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	// ÉÅÉCÉìÉãÅ[Év
 	while (ProcessMessage() == 0)
 	{
-		VECTOR move = VGet(0, 0, 0);
-		if(CheckHitKey(KEY_INPUT_W))
-		{
-			move.z += 10;
-		}
-		if (CheckHitKey(KEY_INPUT_S))
-		{
-			move.z -= 10;
-		}
-		if (CheckHitKey(KEY_INPUT_A))
-		{
-			move.x -= 10;
-		}
-		if (CheckHitKey(KEY_INPUT_D))
-		{
-			move.x += 10;
-		}
-		cameraPos = VAdd(cameraPos, move);
-		cameraPoint = VAdd(cameraPoint, move);
 		player.Update();
+		playerPos = player.GetPos();
+		cameraPoint = playerPos;
+		cameraPos = VAdd(playerPos, offset);
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();

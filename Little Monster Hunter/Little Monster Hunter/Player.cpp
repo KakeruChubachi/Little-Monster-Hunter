@@ -63,3 +63,8 @@ void Player::Draw()
 {
 	MV1DrawModel(mvloadModel);
 }
+
+VECTOR Player::GetPos()
+{
+	return modelPos;
+}

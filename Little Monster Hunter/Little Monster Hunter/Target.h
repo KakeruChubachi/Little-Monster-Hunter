@@ -2,6 +2,6 @@
 class Target
 {
 public:
-	void Draw();
+	void Draw(bool attack);
 };
 

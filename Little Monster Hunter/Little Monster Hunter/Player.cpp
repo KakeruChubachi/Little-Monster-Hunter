@@ -5,7 +5,7 @@ Player::Player()
 {
 	mvloadModel = MV1LoadModel("Resource/character.mv1");
 	animationHandle = MV1LoadModel("Resource/Catwalk Walk Forward HighKnees.mv1");
-	modelPos = VGet(0, 0, 0);
+	modelPos = VGet(0, 0, -10);
 	MV1SetPosition(mvloadModel, modelPos);
 	animNum = MV1GetAnimNum(animationHandle);
 	attachNum = MV1AttachAnim(mvloadModel, 0, animationHandle);
@@ -81,7 +81,7 @@ void Player::Attack()
 {
 	if (CheckHitKey(KEY_INPUT_SPACE))
 	{
-				isAttacking = true;
+		isAttacking = true;
 		attackProgress += 0.1f;
 		if (attackProgress >= 1.0f)
 		{
@@ -93,4 +93,5 @@ void Player::Attack()
 	{
 		isAttacking = false;
 		attackProgress = 0.0f;
+	}
 }

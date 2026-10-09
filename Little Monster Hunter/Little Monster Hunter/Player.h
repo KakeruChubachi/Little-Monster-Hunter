@@ -10,6 +10,7 @@ public:
 	VECTOR GetPos();
 	void Move(VECTOR move);
 	void Attack();
+	bool IsAttacking() const { return isAttacking; } // 攻撃中かどうかを取得する関数
 private:
 	// モデルのハンドル
 	int mvloadModel;// モデルのハンドル

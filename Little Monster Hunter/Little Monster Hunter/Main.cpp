@@ -26,13 +26,14 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	while (ProcessMessage() == 0)
 	{
 		player.Update();
+		bool attack = player.IsAttacking();
 		playerPos = player.GetPos();
 		cameraPoint = playerPos;
 		cameraPos = VAdd(playerPos, offset);
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();
-		target.Draw();
+		target.Draw(attack);
 		player.Draw();
 		ScreenFlip();
 	}

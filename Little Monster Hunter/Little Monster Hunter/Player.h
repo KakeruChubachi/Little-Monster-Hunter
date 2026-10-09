@@ -8,14 +8,26 @@ public:
 	void Update();
 	void Draw();
 	VECTOR GetPos();
+	void Move(VECTOR move);
+	void Attack();
 private:
-	int mvloadModel;
-	int animationHandle;
-	int attachNum;
-	int animNum;
-	float totalTime;
-	float currentTime;
-	float yRadius;
-	VECTOR modelPos;
+	// モデルのハンドル
+	int mvloadModel;// モデルのハンドル
+	int animationHandle;// アニメーションのハンドル
+	int attachNum;// アニメーションの番号
+	int animNum;// アニメーションの数
+
+	// アニメーションの時間
+	float totalTime;// アニメーションの総時間
+	float currentTime;// アニメーションの現在の時間
+	
+	float yRadius;// モデルの回転角度
+	
+	VECTOR modelPos;// モデルの位置
+	
+	//PlyereStatus
+	float moveSpeed = 10.0f; // 移動速度
+	bool isAttacking = false; // 攻撃中かどうか
+	float attackProgress = 0.0f; // 攻撃の進行度
 };
 

@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Player.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Player.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Target.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|solutionrelative:Little Monster Hunter\\Target.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2C7C0775-BAA0-4A09-A14F-3E9F9E17F7CD}|Little Monster Hunter\\Little Monster Hunter.vcxproj|D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\GridLine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -30,37 +38,63 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "Target.cpp",
+              "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.cpp",
+              "RelativeDocumentMoniker": "Little Monster Hunter\\Target.cpp",
+              "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.cpp",
+              "RelativeToolTip": "Little Monster Hunter\\Target.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-10-09T00:31:49.247Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Target.h",
+              "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.h",
+              "RelativeDocumentMoniker": "Little Monster Hunter\\Target.h",
+              "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Target.h",
+              "RelativeToolTip": "Little Monster Hunter\\Target.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2026-10-09T00:30:24.668Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Player.cpp",
               "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.cpp",
               "RelativeDocumentMoniker": "Little Monster Hunter\\Player.cpp",
               "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.cpp",
               "RelativeToolTip": "Little Monster Hunter\\Player.cpp",
-              "ViewState": "AgIAAC4AAAAAAAAAAADwv0QAAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAQwBoAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-10-07T05:28:58.956Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Player.h",
               "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.h",
               "RelativeDocumentMoniker": "Little Monster Hunter\\Player.h",
               "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Player.h",
               "RelativeToolTip": "Little Monster Hunter\\Player.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2026-10-07T05:22:39.561Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "GridLine.cpp",
               "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\GridLine.cpp",
               "RelativeDocumentMoniker": "Little Monster Hunter\\GridLine.cpp",
@@ -72,7 +106,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "GridLine.h",
               "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\GridLine.h",
               "RelativeDocumentMoniker": "Little Monster Hunter\\GridLine.h",
@@ -84,13 +118,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Main.cpp",
               "DocumentMoniker": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp",
               "RelativeDocumentMoniker": "Little Monster Hunter\\Main.cpp",
               "ToolTip": "D:\\MyClass\\2026\\Personal production\\Little Monster Hunter\\Little Monster Hunter\\Little Monster Hunter\\Main.cpp",
               "RelativeToolTip": "Little Monster Hunter\\Main.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAACIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2026-10-02T04:54:04.164Z",
               "EditorCaption": ""

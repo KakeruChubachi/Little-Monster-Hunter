@@ -23,38 +23,8 @@ Player::~Player()
 void Player::Update()
 {
 	VECTOR move = VGet(0, 0, 0);
-	if (CheckHitKey(KEY_INPUT_W))
-	{
-		move.z += 10;
-	}
-	if (CheckHitKey(KEY_INPUT_S))
-	{
-		move.z -= 10;
-	}
-	if (CheckHitKey(KEY_INPUT_A))
-	{
-		move.x -= 10;
-	}
-	if (CheckHitKey(KEY_INPUT_D))
-	{
-		move.x += 10;
-	}
-	if ((move.x != 0) || (move.z != 0))
-	{
-		currentTime += 0.16f;
-		if (currentTime > totalTime)
-		{
-			currentTime = 0.0f;
-		}
-		yRadius = atan2f(move.x, move.z);
-	}
-	else
-	{
-		currentTime = 0.0f;
-	}
-	modelPos.x += move.x;
-	modelPos.z += move.z;
-	MV1SetPosition(mvloadModel, modelPos);
+	Move(VGet(0, 0, 0));
+	Attack();
 	MV1SetAttachAnimTime(mvloadModel, attachNum, currentTime);
 	MV1SetRotationXYZ(mvloadModel, VGet(0, yRadius + DX_PI_F, 0));
 }
@@ -67,4 +37,60 @@ void Player::Draw()
 VECTOR Player::GetPos()
 {
 	return modelPos;
+}
+
+void Player::Move(VECTOR move)
+{
+	//VECTOR move = VGet(0, 0, 0);
+	if (CheckHitKey(KEY_INPUT_W))
+	{
+		move.z += moveSpeed;
+	}
+	if (CheckHitKey(KEY_INPUT_S))
+	{
+		move.z -= moveSpeed;
+	}
+	if (CheckHitKey(KEY_INPUT_A))
+	{
+		move.x -= moveSpeed;
+	}
+	if (CheckHitKey(KEY_INPUT_D))
+	{
+		move.x += moveSpeed;
+	}
+	if ((move.x != 0) || (move.z != 0))
+	{
+		VECTOR direction = VNorm(move);
+		move = VScale(direction, moveSpeed);
+		currentTime += 0.16f;
+		if (currentTime > totalTime)
+		{
+			currentTime = 0.0f;
+		}
+		yRadius = atan2f(move.x, move.z);
+	}
+	else
+	{
+		currentTime = 0.0f;
+	}
+	modelPos = VAdd(modelPos, move);
+	MV1SetPosition(mvloadModel, modelPos);
+}
+
+void Player::Attack()
+{
+	if (CheckHitKey(KEY_INPUT_SPACE))
+	{
+				isAttacking = true;
+		attackProgress += 0.1f;
+		if (attackProgress >= 1.0f)
+		{
+			isAttacking = false;
+			attackProgress = 0.0f;
+		}
+	}
+	else
+	{
+		isAttacking = false;
+		attackProgress = 0.0f;
 }

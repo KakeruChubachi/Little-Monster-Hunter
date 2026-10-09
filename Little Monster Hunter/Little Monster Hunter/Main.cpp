@@ -1,6 +1,7 @@
 #include "DxLib.h"
 #include "GridLine.h"
 #include"Player.h"
+#include"Target.h"
 #include <math.h>
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
@@ -19,6 +20,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	
 	GridLine gridLine;
 	Player player;
+	Target target;
 
 	// ÉÅÉCÉìÉãÅ[Év
 	while (ProcessMessage() == 0)
@@ -30,6 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();
+		target.Draw();
 		player.Draw();
 		ScreenFlip();
 	}

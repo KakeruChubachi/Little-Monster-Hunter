@@ -22,10 +22,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	Player player;
 	Target target;
 
+	LONGLONG frontFrameTime = GetNowHiPerformanceCount(); // 前フレームの時間
+	LONGLONG nowTime = GetNowHiPerformanceCount(); // 現在の時間
+
 	// メインループ
 	while (ProcessMessage() == 0)
 	{
-		player.Update();
+		nowTime = GetNowHiPerformanceCount();
+		float deltaTime = (nowTime - frontFrameTime) / 1000000.0f; // 前フレームからの経過時間
+		frontFrameTime = nowTime;
+		player.Update(deltaTime);
 		bool hitCheck = HitCheck_Sphere_Sphere(player.GetJudgePos(), player.GetJudgeRadius(), target.GetPos(), target.GetRadius());
 		bool attack = player.IsAttacking();
 		bool attackHit = hitCheck && attack;
@@ -43,10 +49,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();
+		DrawFormatString(10, 10, GetColor(255, 255, 255), "Delta Time: %.6f seconds", deltaTime);
 		target.Draw(attackHit);
 		target.TargetHpDraw();
 		player.Draw();
 		ScreenFlip();
+		//WaitTimer(10);
 	}
 	DxLib_End();
 	return 0;

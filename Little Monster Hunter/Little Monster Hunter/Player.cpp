@@ -21,10 +21,10 @@ Player::~Player()
 	MV1DeleteModel(animationHandle);
 }
 
-void Player::Update()
+void Player::Update(float deltaTime)
 {
-	Move(VGet(0, 0, 0));
-	Attack();
+	Move(VGet(0, 0, 0),deltaTime);
+	Attack(deltaTime);
 	MV1SetAttachAnimTime(mvloadModel, attachNum, currentTime);
 	MV1SetRotationXYZ(mvloadModel, VGet(0, yRadius + DX_PI_F, 0));
 }
@@ -43,7 +43,7 @@ VECTOR Player::GetPos()
 	return modelPos;
 }
 
-void Player::Move(VECTOR move)
+void Player::Move(VECTOR move,float deltaTime)
 {
 	if (CheckHitKey(KEY_INPUT_W))
 	{
@@ -65,7 +65,7 @@ void Player::Move(VECTOR move)
 	{
 		VECTOR direction = VNorm(move);
 		move = VScale(direction, moveSpeed);
-		currentTime += 0.16f;
+		currentTime += 26.4f * deltaTime;
 		if (currentTime > totalTime)
 		{
 			currentTime = 0.0f;
@@ -76,11 +76,11 @@ void Player::Move(VECTOR move)
 	{
 		currentTime = 0.0f;
 	}
-	modelPos = VAdd(modelPos, move);
+	modelPos = VAdd(modelPos, VScale(move, deltaTime));
 	MV1SetPosition(mvloadModel, modelPos);
 }
 
-void Player::Attack()
+void Player::Attack(float deltaTime)
 {
 	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed)
 	{
@@ -91,7 +91,7 @@ void Player::Attack()
 	}
 	if (isAttacking)
 	{
-		attackProgress += 0.1f;
+		attackProgress += 1.0f * deltaTime;
 		if (attackProgress >= 1.0f)
 		{
 			isAttacking = false;

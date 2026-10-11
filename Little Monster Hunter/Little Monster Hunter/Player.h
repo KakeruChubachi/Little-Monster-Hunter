@@ -11,6 +11,8 @@ public:
 	void Move(VECTOR move);
 	void Attack();
 	bool IsAttacking() const { return isAttacking; } // 攻撃中かどうかを取得する関数
+	VECTOR GetJudgePos() const { return judgePos; } // 攻撃判定の位置を取得する関数
+	float GetJudgeRadius() const { return judgeRadius; } // 攻撃判定の半径を取得する関数
 private:
 	// モデルのハンドル
 	int mvloadModel;// モデルのハンドル
@@ -29,6 +31,9 @@ private:
 	//PlyereStatus
 	float moveSpeed = 10.0f; // 移動速度
 	bool isAttacking = false; // 攻撃中かどうか
+	bool AttackKeyNotPressed = true; // 攻撃キーが押されていないかどうか
 	float attackProgress = 0.0f; // 攻撃の進行度
+	VECTOR judgePos = VGet(0, 0, 0); // 攻撃判定の位置
+	float judgeRadius = 10.0f; // 攻撃判定の半径
 };
 

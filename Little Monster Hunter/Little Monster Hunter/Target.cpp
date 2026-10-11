@@ -1,5 +1,4 @@
 #include "Target.h"
-#include "DxLib.h"
 
 void Target::Draw(bool attack)
 {
@@ -13,5 +12,18 @@ void Target::Draw(bool attack)
 	{
 		color = GetColor(255, 0, 0); // 通常時の色に戻す
 	}
-	DrawSphere3D(VGet(0, 0, 0), 50.0f, 16, color, GetColor(255, 255, 255), TRUE);
+	DrawSphere3D(targetPos, targetRadius, 16, color, GetColor(255, 255, 255), TRUE);
+}
+
+void Target::TakeDamage(float damage)
+{
+	if(!isHitThisAttack) //まだヒットしていない場合のみ
+	{
+		targetHp -= damage;
+		if (targetHp < 0)
+		{
+			targetHp = 0; // HPが0未満にならないようにする
+		}
+		isHitThisAttack = true; // ヒットフラグを立てる
+	}
 }

@@ -5,13 +5,14 @@ Player::Player()
 {
 	mvloadModel = MV1LoadModel("Resource/character.mv1");
 	animationHandle = MV1LoadModel("Resource/Catwalk Walk Forward HighKnees.mv1");
-	modelPos = VGet(0, 0, -10);
+	modelPos = VGet(0, 0, 0);
 	MV1SetPosition(mvloadModel, modelPos);
 	animNum = MV1GetAnimNum(animationHandle);
 	attachNum = MV1AttachAnim(mvloadModel, 0, animationHandle);
 	totalTime = MV1GetAttachAnimTotalTime(mvloadModel, attachNum);
 	currentTime = 0.0f;
 	yRadius = 0.0f;
+	judgePos = VGet(0, 0, 0);
 }
 
 Player::~Player()
@@ -22,7 +23,6 @@ Player::~Player()
 
 void Player::Update()
 {
-	VECTOR move = VGet(0, 0, 0);
 	Move(VGet(0, 0, 0));
 	Attack();
 	MV1SetAttachAnimTime(mvloadModel, attachNum, currentTime);
@@ -32,6 +32,10 @@ void Player::Update()
 void Player::Draw()
 {
 	MV1DrawModel(mvloadModel);
+	if (isAttacking)
+	{
+		DrawSphere3D(judgePos, judgeRadius, 16, GetColor(0, 255, 0), GetColor(255, 255, 255), TRUE);
+	}
 }
 
 VECTOR Player::GetPos()
@@ -41,7 +45,6 @@ VECTOR Player::GetPos()
 
 void Player::Move(VECTOR move)
 {
-	//VECTOR move = VGet(0, 0, 0);
 	if (CheckHitKey(KEY_INPUT_W))
 	{
 		move.z += moveSpeed;
@@ -79,9 +82,15 @@ void Player::Move(VECTOR move)
 
 void Player::Attack()
 {
-	if (CheckHitKey(KEY_INPUT_SPACE))
+	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed)
 	{
 		isAttacking = true;
+		VECTOR forward = VGet(sinf(yRadius), 0, cosf(yRadius));
+		VECTOR attackPos = VAdd(modelPos, VScale(forward, 100.0f));
+		judgePos = VGet(attackPos.x, attackPos.y + 50.0f, attackPos.z);
+	}
+	if (isAttacking)
+	{
 		attackProgress += 0.1f;
 		if (attackProgress >= 1.0f)
 		{
@@ -89,9 +98,6 @@ void Player::Attack()
 			attackProgress = 0.0f;
 		}
 	}
-	else
-	{
-		isAttacking = false;
-		attackProgress = 0.0f;
-	}
+	
+	AttackKeyNotPressed = !CheckHitKey(KEY_INPUT_SPACE);
 }

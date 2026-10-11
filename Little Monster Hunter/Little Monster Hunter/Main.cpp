@@ -26,14 +26,25 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	while (ProcessMessage() == 0)
 	{
 		player.Update();
+		bool hitCheck = HitCheck_Sphere_Sphere(player.GetJudgePos(), player.GetJudgeRadius(), target.GetPos(), target.GetRadius());
 		bool attack = player.IsAttacking();
+		bool attackHit = hitCheck && attack;
+		if(attackHit)
+		{
+			target.TakeDamage(10.0f);
+		}
+		else if(!attack)
+		{
+			target.ResetHitFlag();
+		}
 		playerPos = player.GetPos();
 		cameraPoint = playerPos;
 		cameraPos = VAdd(playerPos, offset);
 		ClearDrawScreen();
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();
-		target.Draw(attack);
+		target.Draw(attackHit);
+		target.TargetHpDraw();
 		player.Draw();
 		ScreenFlip();
 	}

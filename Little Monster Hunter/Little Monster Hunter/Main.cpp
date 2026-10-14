@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		player.Update(deltaTime);
 		bool hitCheck = HitCheck_Sphere_Sphere(player.GetJudgePos(), player.GetJudgeRadius(), target.GetPos(), target.GetRadius());
 		bool attack = player.IsAttacking();
-		bool attackHit = hitCheck && attack;
+		bool attackHit = player.IsDecisionValid() && hitCheck;
 		if(attackHit)
 		{
 			target.TakeDamage(10.0f);

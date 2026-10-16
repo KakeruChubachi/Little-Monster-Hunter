@@ -32,6 +32,10 @@ private:
 	float yRadius;// モデルの回転角度
 	
 	VECTOR modelPos;// モデルの位置
+
+	int frameNum;
+	VECTOR ballPosition = VGet(100, 0, 0);
+	VECTOR bladeTip = VGet(107, 79, 14);
 	
 	//PlyereStatus
 	float moveSpeed = 1000.0f; // 移動速度
@@ -39,7 +43,7 @@ private:
 	bool AttackKeyNotPressed = true; // 攻撃キーが押されていないかどうか
 	float attackProgress = 0.0f; // 攻撃の進行度
 	VECTOR judgePos = VGet(0, 0, 0); // 攻撃判定の位置
-	float judgeRadius = 10.0f; // 攻撃判定の半径
+	float judgeRadius = 20.0f; // 攻撃判定の半径
 	float  attackStartValue = 0.48f; //攻撃の開始値
 	float attackEndValue = 0.62f; //攻撃の終わり値
 };

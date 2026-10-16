@@ -19,6 +19,14 @@ Player::Player()
 	attackAnimNum = MV1GetAnimNum(attackModelHandle);
 	MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
 	MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 0.0f);
+	int fatmeNum = MV1GetFrameNum(mvloadModel);
+	for (int i = 0; i < fatmeNum; i++)
+	{
+		OutputDebugString(MV1GetFrameName(mvloadModel, i));
+		OutputDebugString("\n");
+	}
+	frameNum = MV1SearchFrame(mvloadModel, "mixamorig:RightHand");
+	
 }
 
 Player::~Player()
@@ -39,18 +47,50 @@ void Player::Update(float deltaTime)
 	MV1SetAttachAnimTime(mvloadModel, attackNum, attackAnimTime);
 	MV1SetAttachAnimTime(mvloadModel, attachNum, currentTime);
 	MV1SetRotationXYZ(mvloadModel, VGet(0, yRadius + DX_PI_F, 0));
+	judgePos = MV1GetFramePosition(mvloadModel, frameNum);
+	if (CheckHitKey(KEY_INPUT_X))
+	{
+		ballPosition = VAdd(ballPosition, VGet(1, 0, 0));
+	}
+	if (CheckHitKey(KEY_INPUT_C))
+	{
+		ballPosition = VSub(ballPosition, VGet(1, 0, 0));
+	}
+	if (CheckHitKey(KEY_INPUT_F))
+	{
+		ballPosition = VAdd(ballPosition, VGet(0, 1, 0));
+	}
+	if (CheckHitKey(KEY_INPUT_G))
+	{
+		ballPosition = VSub(ballPosition,VGet(0,1,0));
+	}
+	if (CheckHitKey(KEY_INPUT_J))
+	{
+		ballPosition = VAdd(ballPosition, VGet(0, 0, 1));
+	}
+	if (CheckHitKey(KEY_INPUT_K))
+	{
+		ballPosition = VSub(ballPosition, VGet(0, 0, 1));
+	}
 }
 
 void Player::Draw()
 {
 	MV1DrawModel(mvloadModel);
-	if (IsDecisionValid())
+	if (isAttacking/*IsDecisionValid()*/)
 	{
+		MATRIX queue = MV1GetFrameLocalWorldMatrix(mvloadModel, frameNum);
 		DrawSphere3D(judgePos, judgeRadius, 16, GetColor(0, 255, 0), GetColor(255, 255, 255), TRUE);
+		DrawSphere3D(VTransform(ballPosition,queue), judgeRadius, 16, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
+
 	}
 	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackTime:%.2f", attackTime);
 	DrawFormatString(10, 70, GetColor(255, 255, 255), "AttackAnim:%d", attackAnimNum);
 	DrawFormatString(10, 90, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
+	DrawFormatString(10, 110, GetColor(255, 255, 255), "FrameNum:%d", frameNum);
+	DrawFormatString(10, 130, GetColor(255, 255, 255), "BallPosition:%f", ballPosition.x);
+	DrawFormatString(10, 150, GetColor(255, 255, 255), "BallPosition:%f", ballPosition.y);
+	DrawFormatString(10, 170, GetColor(255, 255, 255), "BallPosition:%f", ballPosition.z);
 }
 
 VECTOR Player::GetPos()
@@ -108,7 +148,7 @@ void Player::Attack(float deltaTime)
 	}
 	if (isAttacking)
 	{
-		attackProgress += 1.0f * deltaTime;
+		attackProgress += 0.2f * deltaTime;
 		if (attackProgress >= 1.0f)
 		{
 			isAttacking = false;

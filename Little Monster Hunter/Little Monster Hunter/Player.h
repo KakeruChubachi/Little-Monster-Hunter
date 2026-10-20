@@ -14,6 +14,8 @@ public:
 	bool IsDecisionValid() const { return (isAttacking && (attackProgress >= attackStartValue) && (attackProgress <= attackEndValue)); }
 	VECTOR GetJudgePos() const { return judgePos; } // 攻撃判定の位置を取得する関数
 	float GetJudgeRadius() const { return judgeRadius; } // 攻撃判定の半径を取得する関数
+	VECTOR GetWorldBladeTipPos() const { return bladeTip; }
+	float GetCapsuleRad() const { return capsuleRad; }
 private:
 	// モデルのハンドル
 	int mvloadModel;// モデルのハンドル
@@ -35,7 +37,9 @@ private:
 
 	int frameNum;
 	VECTOR ballPosition = VGet(100, 0, 0);
-	VECTOR bladeTip = VGet(107, 79, 14);
+	VECTOR localBladeTip = VGet(107, 79, 14);
+	VECTOR bladeTip = VGet(0, 0, 0);
+	float capsuleRad = 20;
 	
 	//PlyereStatus
 	float moveSpeed = 1000.0f; // 移動速度

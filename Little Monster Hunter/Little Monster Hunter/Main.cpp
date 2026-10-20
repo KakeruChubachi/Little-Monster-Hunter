@@ -32,7 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		float deltaTime = (nowTime - frontFrameTime) / 1000000.0f; // 前フレームからの経過時間
 		frontFrameTime = nowTime;
 		player.Update(deltaTime);
-		bool hitCheck = HitCheck_Sphere_Sphere(player.GetJudgePos(), player.GetJudgeRadius(), target.GetPos(), target.GetRadius());
+		bool hitCheck = HitCheck_Sphere_Capsule(target.GetPos(), target.GetRadius(), player.GetJudgePos(), player.GetWorldBladeTipPos(), player.GetCapsuleRad());
 		bool attack = player.IsAttacking();
 		bool attackHit = player.IsDecisionValid() && hitCheck;
 		if(attackHit)

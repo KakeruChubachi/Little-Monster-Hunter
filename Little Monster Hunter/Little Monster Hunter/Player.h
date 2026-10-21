@@ -7,7 +7,7 @@ public:
 	~Player();
 	void Update(float deltaTime);
 	void Draw();
-	VECTOR GetPos();
+	VECTOR GetPos() { return modelPos; }
 	void Move(VECTOR move,float deltaTime);
 	void Attack(float deltaTime);
 	bool IsAttacking() const { return isAttacking; } // UŒ‚’†‚©‚Ç‚¤‚©‚ğæ“¾‚·‚éŠÖ”

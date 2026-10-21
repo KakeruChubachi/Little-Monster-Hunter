@@ -54,7 +54,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		target.TargetHpDraw();
 		player.Draw();
 		ScreenFlip();
-		//WaitTimer(10);
 	}
 	DxLib_End();
 	return 0;

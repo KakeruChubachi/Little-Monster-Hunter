@@ -36,7 +36,6 @@ private:
 	VECTOR modelPos;// ƒ‚ƒfƒ‹‚ÌˆÊ’u
 
 	int frameNum;
-	VECTOR ballPosition = VGet(100, 0, 0);
 	VECTOR localBladeTip = VGet(107, 79, 14);
 	VECTOR bladeTip = VGet(0, 0, 0);
 	float capsuleRad = 20;

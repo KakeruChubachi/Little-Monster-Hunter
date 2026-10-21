@@ -19,7 +19,6 @@ Player::Player()
 	attackAnimNum = MV1GetAnimNum(attackModelHandle);
 	MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
 	MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 0.0f);
-	int fatmeNum = MV1GetFrameNum(mvloadModel);
 	/*for (int i = 0; i < fatmeNum; i++)
 	{
 		OutputDebugString(MV1GetFrameName(mvloadModel, i));
@@ -58,15 +57,9 @@ void Player::Draw()
 	MV1DrawModel(mvloadModel);
 	if (IsDecisionValid())
 	{
-		MATRIX queue = MV1GetFrameLocalWorldMatrix(mvloadModel, frameNum);
-		//DrawSphere3D(judgePos, judgeRadius, 16, GetColor(0, 255, 0), GetColor(255, 255, 255), TRUE);
-		//DrawSphere3D(VTransform(ballPosition,queue), judgeRadius, 16, GetColor(255, 0, 0), GetColor(255, 255, 255), TRUE);
 		DrawCapsule3D(judgePos, bladeTip,capsuleRad, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
-	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackTime:%.2f", attackTime);
-	DrawFormatString(10, 70, GetColor(255, 255, 255), "AttackAnim:%d", attackAnimNum);
 	DrawFormatString(10, 90, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
-	DrawFormatString(10, 110, GetColor(255, 255, 255), "FrameNum:%d", frameNum);
 }
 
 VECTOR Player::GetPos()
@@ -118,9 +111,6 @@ void Player::Attack(float deltaTime)
 		isAttacking = true;
 		MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 1.0f);
 		MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 0.0f);
-		VECTOR forward = VGet(sinf(yRadius), 0, cosf(yRadius));
-		VECTOR attackPos = VAdd(modelPos, VScale(forward, 100.0f));
-		judgePos = VGet(attackPos.x, attackPos.y + 50.0f, attackPos.z);
 	}
 	if (isAttacking)
 	{

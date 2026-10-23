@@ -25,11 +25,15 @@ private:
 	int attackAnimNum;// 攻撃アニメーションの数
 	int attackModelHandle;// 攻撃アニメーションのハンドル
 	int attackNum;// 攻撃アニメーションの番号
+	int drawSwordHandle;//抜刀アニメーションのハンドル
+	int drawSwordNum;//抜刀アニメーションの番号
+	int drawSwordAttach;
 
 	// アニメーションの時間
 	float totalTime;// アニメーションの総時間
 	float currentTime;// アニメーションの現在の時間
 	float attackTime;// 攻撃アニメーションの時間
+	float drawTime;//抜刀アニメーションの時間
 	
 	float yRadius;// モデルの回転角度
 	

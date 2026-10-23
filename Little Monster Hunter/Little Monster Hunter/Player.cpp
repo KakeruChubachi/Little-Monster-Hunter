@@ -6,6 +6,9 @@ Player::Player()
 	mvloadModel = MV1LoadModel("Resource/character.mv1");
 	attackModelHandle = MV1LoadModel("Resource/Great Sword Slash 2.mv1");
 	animationHandle = MV1LoadModel("Resource/Catwalk Walk Forward HighKnees.mv1");
+	drawSwordHandle = MV1LoadModel("Resource/Draw A Great Sword 2.mv1");
+	drawSwordNum = MV1GetAnimNum(drawSwordHandle);
+	drawSwordAttach = MV1AttachAnim(mvloadModel, 0, drawSwordHandle);
 	attackNum =  MV1AttachAnim(mvloadModel, 0, attackModelHandle);
 	modelPos = VGet(0, 0, 0);
 	MV1SetPosition(mvloadModel, modelPos);
@@ -13,6 +16,7 @@ Player::Player()
 	attachNum = MV1AttachAnim(mvloadModel, 0, animationHandle);
 	totalTime = MV1GetAttachAnimTotalTime(mvloadModel, attachNum);
 	attackTime = MV1GetAttachAnimTotalTime(mvloadModel, attackNum);
+	drawTime = MV1GetAttachAnimTotalTime(mvloadModel, drawSwordAttach);
 	currentTime = 0.0f;
 	yRadius = 0.0f;
 	judgePos = VGet(0, 0, 0);
@@ -27,6 +31,7 @@ Player::~Player()
 	MV1DeleteModel(mvloadModel);
 	MV1DeleteModel(animationHandle);
 	MV1DeleteModel(attackModelHandle);
+	MV1DeleteModel(drawSwordHandle);
 }
 
 void Player::Update(float deltaTime)
@@ -53,7 +58,10 @@ void Player::Draw()
 	{
 		DrawCapsule3D(judgePos, bladeTip,capsuleRad, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
-	DrawFormatString(10, 90, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
+	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
+	DrawFormatString(10, 70, GetColor(255, 255, 255), "AnimNum:%d", drawSwordNum);
+	DrawFormatString(10, 90, GetColor(255, 255,255), "AnimAttach:%d", drawSwordAttach);
+	DrawFormatString(10, 110, GetColor(255, 255, 255), "TotalTime:%.2f", drawTime);
 }
 
 void Player::Move(VECTOR move,float deltaTime)

@@ -44,7 +44,11 @@ private:
 	VECTOR localBladeTip = VGet(107, 79, 14);
 	VECTOR bladeTip = VGet(0, 0, 0);
 	float capsuleRad = 20;
-	
+
+	float animProgress = 0.0f;
+	bool isAnimating = false;
+	bool AnimatingKeyNotPressed = true;
+
 	//PlyereStatus
 	float moveSpeed = 1000.0f; // ˆÚ“®‘¬“x
 	bool isAttacking = false; // UŒ‚’†‚©‚Ç‚¤‚©

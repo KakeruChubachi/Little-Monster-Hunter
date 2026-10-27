@@ -5,7 +5,7 @@ Player::Player()
 {
 	mvloadModel = MV1LoadModel("Resource/character.mv1");
 	attackModelHandle = MV1LoadModel("Resource/Great Sword Slash 2.mv1");
-	animationHandle = MV1LoadModel("Resource/Catwalk Walk Forward HighKnees.mv1");
+	animationHandle = MV1LoadModel("Resource/Great Sword Walk.mv1");
 	drawSwordHandle = MV1LoadModel("Resource/Draw A Great Sword 2.mv1");
 	drawSwordNum = MV1GetAnimNum(drawSwordHandle);
 	drawSwordAttach = MV1AttachAnim(mvloadModel, 0, drawSwordHandle);
@@ -23,6 +23,7 @@ Player::Player()
 	attackAnimNum = MV1GetAnimNum(attackModelHandle);
 	MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
 	MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 0.0f);
+	MV1SetAttachAnimBlendRate(mvloadModel, drawSwordAttach, 0.0f);
 	frameNum = MV1SearchFrame(mvloadModel, "mixamorig:RightHand");
 }
 
@@ -36,7 +37,7 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	if(isAttacking == false)
+	if(!isAttacking && !isAnimating)
 	{
 		Move(VGet(0, 0, 0), deltaTime);
 	}
@@ -49,6 +50,27 @@ void Player::Update(float deltaTime)
 	MATRIX handLine = MV1GetFrameLocalWorldMatrix(mvloadModel, frameNum);
 	VECTOR worldPos = VTransform(localBladeTip, handLine);
 	bladeTip = worldPos;
+	if (CheckHitKey(KEY_INPUT_R) && !isAnimating && AnimatingKeyNotPressed)
+	{
+		isAnimating = true;
+		animProgress = 0.0f;
+		MV1SetAttachAnimBlendRate(mvloadModel, drawSwordAttach, 1.0f);
+		MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 0.0f);
+	}
+	if(isAnimating)
+	{
+		animProgress += 0.5f * deltaTime;
+		float drawSwordTime = animProgress * drawTime;
+		MV1SetAttachAnimTime(mvloadModel, drawSwordAttach, drawSwordTime);
+		if (animProgress >= 1.0)
+		{
+			isAnimating = false;
+			MV1SetAttachAnimBlendRate(mvloadModel, drawSwordAttach, 0.0f);
+			MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
+			animProgress = 0.0f;
+		}
+	}
+	AnimatingKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
 }
 
 void Player::Draw()
@@ -103,7 +125,7 @@ void Player::Move(VECTOR move,float deltaTime)
 
 void Player::Attack(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed)
+	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed && !isAnimating)
 	{
 		isAttacking = true;
 		MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 1.0f);

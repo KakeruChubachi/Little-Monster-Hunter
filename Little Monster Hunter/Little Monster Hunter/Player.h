@@ -1,5 +1,14 @@
 #pragma once
 #include "DxLib.h"
+
+/*アニメ1つ分のデータ(ファイルのハンドル、アタッチ番号、総時間)*/
+struct AnimData
+{
+	int handle = -1;//アニメのファイルのハンドル
+	int attach = -1;//アニメのアタッチ番号
+	float totalTime = 0.0f;//アニメの総時間
+};
+
 class Player
 {
 public:
@@ -16,20 +25,22 @@ public:
 	VECTOR GetWorldBladeTipPos() const { return bladeTip; }
 	float GetCapsuleRad() const { return capsuleRad; }
 private:
+	/***アニメのファイルを読み込み、アタッチしてAnimDataで返す***/
+	AnimData LoadAnim(const char* path);
+	AnimData drawAnim;//抜刀アニメのデータ
 	// モデルのハンドル
 	int mvloadModel;// モデルのハンドル
 	int animationHandle;// 歩行アニメのファイルのハンドル
 	int attachNum;// 歩行アニメのアタッチ番号
 	int attackModelHandle;// 攻撃アニメのファイルのハンドル
 	int attackNum;// 攻撃アニメのアタッチ番号
-	int drawSwordHandle;//抜刀アニメーションのファイルのハンドル
-	int drawSwordAttach;//抜刀アニメのアタッチ番号
+	
 
 	// アニメーションの時間
 	float totalTime;// 歩行アニメの総時間
 	float currentTime = 0.0f;// 歩行アニメの現在の時間
 	float attackTime;// 攻撃アニメの総時間
-	float drawTime;//抜刀アニメの総時間
+	
 	
 	float yRadius = 0.0f;// モデルの回転角度
 	

@@ -4,24 +4,24 @@
 Player::Player()
 {
 	/***アニメのデータを読み込む***/
-	mvloadModel = MV1LoadModel("Resource/character.mv1");
+	modelHandle = MV1LoadModel("Resource/character.mv1");
 	drawAnim = LoadAnim("Resource/Draw A Great Sword 2.mv1");
 	attackAnim = LoadAnim("Resource/Great Sword Slash 2.mv1");
 	walkAnim = LoadAnim("Resource/Catwalk Walk Forward HighKnees.mv1");
-	MV1SetPosition(mvloadModel, modelPos);
+	MV1SetPosition(modelHandle, modelPos);
 
 	/***最初のブレンド率を設定する***/
-	MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
+	MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
 
 	/***右手のフレーム番号を探す***/
-	frameNum = MV1SearchFrame(mvloadModel, "mixamorig:RightHand");
+	rightHandFrame = MV1SearchFrame(modelHandle, "mixamorig:RightHand");
 	
 	
 }
 
 Player::~Player()
 {
-	MV1DeleteModel(mvloadModel);
+	MV1DeleteModel(modelHandle);
 	MV1DeleteModel(walkAnim.handle);
 	MV1DeleteModel(attackAnim.handle);
 	MV1DeleteModel(drawAnim.handle);
@@ -29,48 +29,48 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	if(!isAttacking && !isAnimating)
+	if(!isAttacking && !isDrawing)
 	{
 		Move(VGet(0, 0, 0), deltaTime);
 	}
 	Attack(deltaTime);
 	float attackAnimTime = attackProgress * attackAnim.totalTime;
-	MV1SetAttachAnimTime(mvloadModel, attackAnim.attach, attackAnimTime);
-	MV1SetAttachAnimTime(mvloadModel, walkAnim.attach, currentTime);
-	MV1SetRotationXYZ(mvloadModel, VGet(0, yRadius + DX_PI_F, 0));
-	judgePos = MV1GetFramePosition(mvloadModel, frameNum);
-	MATRIX handLine = MV1GetFrameLocalWorldMatrix(mvloadModel, frameNum);
+	MV1SetAttachAnimTime(modelHandle, attackAnim.attach, attackAnimTime);
+	MV1SetAttachAnimTime(modelHandle, walkAnim.attach, walkTime);
+	MV1SetRotationXYZ(modelHandle, VGet(0, yRadius + DX_PI_F, 0));
+	judgePos = MV1GetFramePosition(modelHandle, rightHandFrame);
+	MATRIX handLine = MV1GetFrameLocalWorldMatrix(modelHandle, rightHandFrame);
 	VECTOR worldPos = VTransform(localBladeTip, handLine);
 	bladeTip = worldPos;
-	if (CheckHitKey(KEY_INPUT_R) && !isAnimating && AnimatingKeyNotPressed && !isAttacking)
+	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking)
 	{
-		isAnimating = true;
-		animProgress = 0.0f;
-		MV1SetAttachAnimBlendRate(mvloadModel, drawAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 0.0f);
+		isDrawing = true;
+		drawProgress = 0.0f;
+		MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 1.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
 	}
-	if(isAnimating)
+	if(isDrawing)
 	{
-		animProgress += 0.5f * deltaTime;
-		float drawSwordTime = animProgress * drawAnim.totalTime;
-		MV1SetAttachAnimTime(mvloadModel, drawAnim.attach, drawSwordTime);
-		if (animProgress >= 1.0)
+		drawProgress += drawAnimSpeed * deltaTime;
+		float drawSwordTime = drawProgress * drawAnim.totalTime;
+		MV1SetAttachAnimTime(modelHandle, drawAnim.attach, drawSwordTime);
+		if (drawProgress >= 1.0)
 		{
-			isAnimating = false;
-			MV1SetAttachAnimBlendRate(mvloadModel, drawAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
-			animProgress = 0.0f;
+			isDrawing = false;
+			MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 0.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
+			drawProgress = 0.0f;
 		}
 	}
-	AnimatingKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
+	drawKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
 }
 
 void Player::Draw()
 {
-	MV1DrawModel(mvloadModel);
+	MV1DrawModel(modelHandle);
 	if (IsDecisionValid())
 	{
-		DrawCapsule3D(judgePos, bladeTip,capsuleRad, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
+		DrawCapsule3D(judgePos, bladeTip,capsuleRadius, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
 	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
 }
@@ -97,51 +97,51 @@ void Player::Move(VECTOR move,float deltaTime)
 	{
 		VECTOR direction = VNorm(move);
 		move = VScale(direction, moveSpeed);
-		currentTime += 26.4f/*移動の速さに併せて決めた値*/ * deltaTime;
-		if (currentTime > walkAnim.totalTime)
+		walkTime += walkAnimSpeed * deltaTime;
+		if (walkTime > walkAnim.totalTime)
 		{
-			currentTime = 0.0f;
+			walkTime = 0.0f;
 		}
 		yRadius = atan2f(move.x, move.z);
 	}
 	else
 	{
-		currentTime = 0.0f;
+		walkTime = 0.0f;
 	}
 	modelPos = VAdd(modelPos, VScale(move, deltaTime));
-	MV1SetPosition(mvloadModel, modelPos);
+	MV1SetPosition(modelHandle, modelPos);
 }
 
 void Player::Attack(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed && !isAnimating)
+	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && attackKeyNotPressed && !isDrawing)
 	{
 		isAttacking = true;
-		MV1SetAttachAnimBlendRate(mvloadModel, attackAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 0.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 1.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
 	}
 	if (isAttacking)
 	{
-		attackProgress += 0.5f/*１/秒数。全体で２秒*/ * deltaTime;
+		attackProgress += attackAnimSpeed * deltaTime;
 		if (attackProgress >= 1.0f)
 		{
 			isAttacking = false;
-			MV1SetAttachAnimBlendRate(mvloadModel, attackAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 0.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
 			attackProgress = 0.0f;
 		}
 	}
 	
-	AttackKeyNotPressed = !CheckHitKey(KEY_INPUT_SPACE);
+	attackKeyNotPressed = !CheckHitKey(KEY_INPUT_SPACE);
 }
 
 AnimData Player::LoadAnim(const char* path)
 {
 	AnimData data;
 	data.handle = MV1LoadModel(path);
-	data.attach = MV1AttachAnim(mvloadModel, 0, data.handle);
-	data.totalTime = MV1GetAttachAnimTotalTime(mvloadModel, data.attach);
-	MV1SetAttachAnimBlendRate(mvloadModel,data.attach, 0.0f);
+	data.attach = MV1AttachAnim(modelHandle, 0, data.handle);
+	data.totalTime = MV1GetAttachAnimTotalTime(modelHandle, data.attach);
+	MV1SetAttachAnimBlendRate(modelHandle,data.attach, 0.0f);
 	return data;
 }
 

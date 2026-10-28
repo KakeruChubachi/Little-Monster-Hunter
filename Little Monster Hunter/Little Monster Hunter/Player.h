@@ -17,46 +17,54 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 	VECTOR GetPos() { return modelPos; }
-	void Move(VECTOR move,float deltaTime);
-	void Attack(float deltaTime);
+	
 	bool IsAttacking() const { return isAttacking; } // 攻撃中かどうかを取得する関数
 	bool IsDecisionValid() const { return (isAttacking && (attackProgress >= attackStartValue) && (attackProgress <= attackEndValue)); }
 	VECTOR GetJudgePos() const { return judgePos; } // 攻撃判定の位置を取得する関数
 	VECTOR GetWorldBladeTipPos() const { return bladeTip; }
-	float GetCapsuleRad() const { return capsuleRad; }
+	float GetCapsuleRad() const { return capsuleRadius; }
 private:
-	/***アニメのファイルを読み込み、アタッチしてAnimDataで返す***/
+	/***関数***/
+	void Move(VECTOR move, float deltaTime);
+	void Attack(float deltaTime);
+	/*アニメのファイルを読み込み、アタッチしてAnimDataで返す*/
 	AnimData LoadAnim(const char* path);
+	
+
+	/***リソース***/
+	int modelHandle = -1;// モデルのハンドル
 	AnimData drawAnim;//抜刀アニメのデータ
 	AnimData attackAnim;//攻撃アニメのデータ
 	AnimData walkAnim;//歩行アニメのデータ
-	// モデルのハンドル
-	int mvloadModel;// モデルのハンドル
-	
-	// アニメーションの時間
-	float currentTime = 0.0f;// 歩行アニメの現在の時間
-	
-	
+	int rightHandFrame = -1;//右手のフレーム番号
+
+	/***位置と向き***/
 	float yRadius = 0.0f;// モデルの回転角度
-	
 	VECTOR modelPos = VGet(0, 0, 0);// モデルの位置
 
-	int frameNum;//右手のフレーム番号
-	VECTOR localBladeTip = VGet(107, 79, 14);//手のフレームから見た剣先の位置
-	VECTOR bladeTip = VGet(0, 0, 0);//剣先のワールド座標。毎フレーム更新
-	float capsuleRad = 20;//剣の判定（カプセル）の半径
-
-	float animProgress = 0.0f;//抜刀アニメの進行度（０から１）
-	bool isAnimating = false;//抜刀アニメを再生中か
-	bool AnimatingKeyNotPressed = true;//Rキーが押されてないか
-
-	//PlayerStatus
-	float moveSpeed = 1000.0f; // 移動速度
+	/***アニメの再生の状態***/
+	float walkTime = 0.0f;// 歩行アニメの現在の時間
+	float drawProgress = 0.0f;//抜刀アニメの進行度（０から１）
+	bool isDrawing = false;//抜刀アニメを再生中か
+	
+	/***攻撃の状態***/
 	bool isAttacking = false; // 攻撃中かどうか
-	bool AttackKeyNotPressed = true; // 攻撃キーが押されていないかどうか
 	float attackProgress = 0.0f; // 攻撃の進行度
 	VECTOR judgePos = VGet(0, 0, 0); // 攻撃判定の位置
-	float  attackStartValue = 0.48f; //判定が有効になる攻撃の進行度の範囲（０から１）
-	float attackEndValue = 0.62f; //判定が有効になる攻撃の進行度の範囲（０から１）
+	VECTOR bladeTip = VGet(0, 0, 0);//剣先のワールド座標。毎フレーム更新
+	
+	/***キー入力の状態***/
+	bool drawKeyNotPressed = true;//Rキーが押されてないか
+	bool attackKeyNotPressed = true; // 攻撃キーが押されていないかどうか
+
+	/***調整用の値***/
+	VECTOR localBladeTip = VGet(107, 79, 14);//手のフレームから見た剣先の位置
+	float capsuleRadius = 20.0f;//剣の判定（カプセル）の半径
+	float moveSpeed = 1000.0f; // 移動速度
+	float  attackStartValue = 0.48f; //判定が有効になり始める進行度（０から１）
+	float attackEndValue = 0.62f; //判定が有効な最後の進行度（０から１）
+	float walkAnimSpeed = 26.4f;//毎秒進める歩行アニメの速さ
+	float attackAnimSpeed = 0.5f;//攻撃アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
+	float drawAnimSpeed = 0.5f;//抜刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 };
 

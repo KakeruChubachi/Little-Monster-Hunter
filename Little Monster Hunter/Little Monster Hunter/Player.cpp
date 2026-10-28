@@ -3,22 +3,15 @@
 
 Player::Player()
 {
-	/***キャラクターのモデルを読み込む***/
+	/***アニメのデータを読み込む***/
 	mvloadModel = MV1LoadModel("Resource/character.mv1");
 	drawAnim = LoadAnim("Resource/Draw A Great Sword 2.mv1");
-	attackModelHandle = MV1LoadModel("Resource/Great Sword Slash 2.mv1");
-	animationHandle = MV1LoadModel("Resource/Catwalk Walk Forward HighKnees.mv1");
+	attackAnim = LoadAnim("Resource/Great Sword Slash 2.mv1");
+	walkAnim = LoadAnim("Resource/Catwalk Walk Forward HighKnees.mv1");
 	MV1SetPosition(mvloadModel, modelPos);
 
-	/***アニメを読み込みアタッチして総時間を取る***/
-	attackNum = MV1AttachAnim(mvloadModel, 0, attackModelHandle);
-	attachNum = MV1AttachAnim(mvloadModel, 0, animationHandle);
-	totalTime = MV1GetAttachAnimTotalTime(mvloadModel, attachNum);
-	attackTime = MV1GetAttachAnimTotalTime(mvloadModel, attackNum);
-
 	/***最初のブレンド率を設定する***/
-	MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
-	MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 0.0f);
+	MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
 
 	/***右手のフレーム番号を探す***/
 	frameNum = MV1SearchFrame(mvloadModel, "mixamorig:RightHand");
@@ -29,8 +22,8 @@ Player::Player()
 Player::~Player()
 {
 	MV1DeleteModel(mvloadModel);
-	MV1DeleteModel(animationHandle);
-	MV1DeleteModel(attackModelHandle);
+	MV1DeleteModel(walkAnim.handle);
+	MV1DeleteModel(attackAnim.handle);
 	MV1DeleteModel(drawAnim.handle);
 }
 
@@ -41,9 +34,9 @@ void Player::Update(float deltaTime)
 		Move(VGet(0, 0, 0), deltaTime);
 	}
 	Attack(deltaTime);
-	float attackAnimTime = attackProgress * attackTime;
-	MV1SetAttachAnimTime(mvloadModel, attackNum, attackAnimTime);
-	MV1SetAttachAnimTime(mvloadModel, attachNum, currentTime);
+	float attackAnimTime = attackProgress * attackAnim.totalTime;
+	MV1SetAttachAnimTime(mvloadModel, attackAnim.attach, attackAnimTime);
+	MV1SetAttachAnimTime(mvloadModel, walkAnim.attach, currentTime);
 	MV1SetRotationXYZ(mvloadModel, VGet(0, yRadius + DX_PI_F, 0));
 	judgePos = MV1GetFramePosition(mvloadModel, frameNum);
 	MATRIX handLine = MV1GetFrameLocalWorldMatrix(mvloadModel, frameNum);
@@ -54,7 +47,7 @@ void Player::Update(float deltaTime)
 		isAnimating = true;
 		animProgress = 0.0f;
 		MV1SetAttachAnimBlendRate(mvloadModel, drawAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 0.0f);
+		MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 0.0f);
 	}
 	if(isAnimating)
 	{
@@ -65,7 +58,7 @@ void Player::Update(float deltaTime)
 		{
 			isAnimating = false;
 			MV1SetAttachAnimBlendRate(mvloadModel, drawAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
+			MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
 			animProgress = 0.0f;
 		}
 	}
@@ -105,7 +98,7 @@ void Player::Move(VECTOR move,float deltaTime)
 		VECTOR direction = VNorm(move);
 		move = VScale(direction, moveSpeed);
 		currentTime += 26.4f/*移動の速さに併せて決めた値*/ * deltaTime;
-		if (currentTime > totalTime)
+		if (currentTime > walkAnim.totalTime)
 		{
 			currentTime = 0.0f;
 		}
@@ -124,8 +117,8 @@ void Player::Attack(float deltaTime)
 	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && AttackKeyNotPressed && !isAnimating)
 	{
 		isAttacking = true;
-		MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 1.0f);
-		MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 0.0f);
+		MV1SetAttachAnimBlendRate(mvloadModel, attackAnim.attach, 1.0f);
+		MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 0.0f);
 	}
 	if (isAttacking)
 	{
@@ -133,8 +126,8 @@ void Player::Attack(float deltaTime)
 		if (attackProgress >= 1.0f)
 		{
 			isAttacking = false;
-			MV1SetAttachAnimBlendRate(mvloadModel, attackNum, 0.0f);
-			MV1SetAttachAnimBlendRate(mvloadModel, attachNum, 1.0f);
+			MV1SetAttachAnimBlendRate(mvloadModel, attackAnim.attach, 0.0f);
+			MV1SetAttachAnimBlendRate(mvloadModel, walkAnim.attach, 1.0f);
 			attackProgress = 0.0f;
 		}
 	}

@@ -17,7 +17,6 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 	VECTOR GetPos() { return modelPos; }
-	
 	bool IsAttacking() const { return isAttacking; } // 攻撃中かどうかを取得する関数
 	bool IsDecisionValid() const { return (isAttacking && (attackProgress >= attackStartValue) && (attackProgress <= attackEndValue)); }
 	VECTOR GetJudgePos() const { return judgePos; } // 攻撃判定の位置を取得する関数
@@ -29,7 +28,10 @@ private:
 	void Attack(float deltaTime);
 	/*アニメのファイルを読み込み、アタッチしてAnimDataで返す*/
 	AnimData LoadAnim(const char* path);
-	
+	void UpdateDraw(float deltaTime);//抜刀の開始、進行、終了
+	void ApplyAnimTimes();//攻撃と歩行のアニメの時間を設定
+	void ApplyRotation();//回転を設定
+	void UpdateBladeTip();//手の位置とワールドの剣先を更新
 
 	/***リソース***/
 	int modelHandle = -1;// モデルのハンドル

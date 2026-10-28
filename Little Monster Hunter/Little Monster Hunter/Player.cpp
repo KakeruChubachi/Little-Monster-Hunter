@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	/***アニメのデータを読み込む***/
+	/***モデルとアニメのデータを読み込む***/
 	modelHandle = MV1LoadModel("Resource/character.mv1");
 	drawAnim = LoadAnim("Resource/Draw A Great Sword 2.mv1");
 	attackAnim = LoadAnim("Resource/Great Sword Slash 2.mv1");
@@ -15,8 +15,6 @@ Player::Player()
 
 	/***右手のフレーム番号を探す***/
 	rightHandFrame = MV1SearchFrame(modelHandle, "mixamorig:RightHand");
-	
-	
 }
 
 Player::~Player()
@@ -34,35 +32,10 @@ void Player::Update(float deltaTime)
 		Move(VGet(0, 0, 0), deltaTime);
 	}
 	Attack(deltaTime);
-	float attackAnimTime = attackProgress * attackAnim.totalTime;
-	MV1SetAttachAnimTime(modelHandle, attackAnim.attach, attackAnimTime);
-	MV1SetAttachAnimTime(modelHandle, walkAnim.attach, walkTime);
-	MV1SetRotationXYZ(modelHandle, VGet(0, yRadius + DX_PI_F, 0));
-	judgePos = MV1GetFramePosition(modelHandle, rightHandFrame);
-	MATRIX handLine = MV1GetFrameLocalWorldMatrix(modelHandle, rightHandFrame);
-	VECTOR worldPos = VTransform(localBladeTip, handLine);
-	bladeTip = worldPos;
-	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking)
-	{
-		isDrawing = true;
-		drawProgress = 0.0f;
-		MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
-	}
-	if(isDrawing)
-	{
-		drawProgress += drawAnimSpeed * deltaTime;
-		float drawSwordTime = drawProgress * drawAnim.totalTime;
-		MV1SetAttachAnimTime(modelHandle, drawAnim.attach, drawSwordTime);
-		if (drawProgress >= 1.0)
-		{
-			isDrawing = false;
-			MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
-			drawProgress = 0.0f;
-		}
-	}
-	drawKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
+	UpdateDraw(deltaTime);
+	ApplyAnimTimes();
+	ApplyRotation();
+	UpdateBladeTip();
 }
 
 void Player::Draw()
@@ -143,5 +116,50 @@ AnimData Player::LoadAnim(const char* path)
 	data.totalTime = MV1GetAttachAnimTotalTime(modelHandle, data.attach);
 	MV1SetAttachAnimBlendRate(modelHandle,data.attach, 0.0f);
 	return data;
+}
+
+void Player::UpdateDraw(float deltaTime)
+{
+	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking)
+	{
+		isDrawing = true;
+		drawProgress = 0.0f;
+		MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 1.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
+	}
+	if (isDrawing)
+	{
+		drawProgress += drawAnimSpeed * deltaTime;
+		float drawSwordTime = drawProgress * drawAnim.totalTime;
+		MV1SetAttachAnimTime(modelHandle, drawAnim.attach, drawSwordTime);
+		if (drawProgress >= 1.0)
+		{
+			isDrawing = false;
+			MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 0.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
+			drawProgress = 0.0f;
+		}
+	}
+	drawKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
+}
+
+void Player::ApplyAnimTimes()
+{
+	float attackAnimTime = attackProgress * attackAnim.totalTime;
+	MV1SetAttachAnimTime(modelHandle, attackAnim.attach, attackAnimTime);
+	MV1SetAttachAnimTime(modelHandle, walkAnim.attach, walkTime);
+}
+
+void Player::ApplyRotation()
+{
+	MV1SetRotationXYZ(modelHandle, VGet(0, yRadius + DX_PI_F, 0));
+}
+
+void Player::UpdateBladeTip()
+{
+	judgePos = MV1GetFramePosition(modelHandle, rightHandFrame);
+	MATRIX handLine = MV1GetFrameLocalWorldMatrix(modelHandle, rightHandFrame);
+	VECTOR worldPos = VTransform(localBladeTip, handLine);
+	bladeTip = worldPos;
 }
 

@@ -26,6 +26,7 @@ private:
 	/***関数***/
 	void Move(VECTOR move, float deltaTime);
 	void Attack(float deltaTime);
+	AnimData  GetWalkType() const;
 	/*アニメのファイルを読み込み、アタッチしてAnimDataで返す*/
 	AnimData LoadAnim(const char* path);
 	void UpdateDraw(float deltaTime);//抜刀の開始、進行、終了
@@ -48,8 +49,11 @@ private:
 
 	/***アニメの再生の状態***/
 	float walkTime = 0.0f;// 歩行アニメの現在の時間
+	
+	/*抜刀の状態*/
 	float drawProgress = 0.0f;//抜刀アニメの進行度（０から１）
 	bool isDrawing = false;//抜刀アニメを再生中か
+	bool isDrawn = false;//抜刀しているか
 	
 	/***攻撃の状態***/
 	bool isAttacking = false; // 攻撃中かどうか

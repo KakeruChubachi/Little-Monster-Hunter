@@ -75,7 +75,7 @@ void Player::Move(VECTOR move,float deltaTime)
 		VECTOR direction = VNorm(move);
 		move = VScale(direction, moveSpeed);
 		walkTime += walkAnimSpeed * deltaTime;
-		if (walkTime > walkAnim.totalTime)
+		if (walkTime > GetWalkType().totalTime)
 		{
 			walkTime = 0.0f;
 		}
@@ -95,7 +95,7 @@ void Player::Attack(float deltaTime)
 	{
 		isAttacking = true;
 		MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 0.0f);
 	}
 	if (isAttacking)
 	{
@@ -104,12 +104,25 @@ void Player::Attack(float deltaTime)
 		{
 			isAttacking = false;
 			MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 1.0f);
 			attackProgress = 0.0f;
 		}
 	}
 	
 	attackKeyNotPressed = !CheckHitKey(KEY_INPUT_SPACE);
+}
+
+AnimData Player::GetWalkType() const
+{
+	if (isDrawn)
+	{
+		return drawWalkAnim;
+	}
+	else
+	{
+		return walkAnim;
+	}
+	
 }
 
 AnimData Player::LoadAnim(const char* path)
@@ -124,12 +137,12 @@ AnimData Player::LoadAnim(const char* path)
 
 void Player::UpdateDraw(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking)
+	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking && !isDrawn)
 	{
 		isDrawing = true;
 		drawProgress = 0.0f;
 		MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 1.0f);
-		MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 0.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 0.0f);
 	}
 	if (isDrawing)
 	{
@@ -139,8 +152,9 @@ void Player::UpdateDraw(float deltaTime)
 		if (drawProgress >= 1.0)
 		{
 			isDrawing = false;
+			isDrawn = true;
 			MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 0.0f);
-			MV1SetAttachAnimBlendRate(modelHandle, walkAnim.attach, 1.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 1.0f);
 			drawProgress = 0.0f;
 		}
 	}
@@ -151,7 +165,7 @@ void Player::ApplyAnimTimes()
 {
 	float attackAnimTime = attackProgress * attackAnim.totalTime;
 	MV1SetAttachAnimTime(modelHandle, attackAnim.attach, attackAnimTime);
-	MV1SetAttachAnimTime(modelHandle, walkAnim.attach, walkTime);
+	MV1SetAttachAnimTime(modelHandle, GetWalkType().attach, walkTime);
 }
 
 void Player::ApplyRotation()

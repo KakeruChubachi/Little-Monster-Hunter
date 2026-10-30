@@ -40,41 +40,57 @@ void Player::Update(float deltaTime)
 	ApplyAnimTimes();
 	ApplyRotation();
 	UpdateBladeTip();
+	Time += deltaTime;
 }
+
 
 void Player::Draw()
 {
+	
 	MV1DrawModel(modelHandle);
 	if (IsDecisionValid())
 	{
 		DrawCapsule3D(judgePos, bladeTip,capsuleRadius, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
 	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
+	DrawFormatString(10, 70, GetColor(255, 255, 255), "Time:%.2f", Time);
 }
 
 void Player::Move(VECTOR move,float deltaTime)
 {
+	float moveSpeed;
+	float walkSpeed;
+	if (isDrawn)
+	{
+		moveSpeed = drawMoveSpeed;
+		walkSpeed = drawWalkAnimSpeed;
+	}
+	else
+	{
+		moveSpeed = normalMoveSpeed;
+		walkSpeed = walkAnimSpeed;
+	}
 	if (CheckHitKey(KEY_INPUT_W))
 	{
-		move.z += moveSpeed;
+		move.z += normalMoveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_S))
 	{
-		move.z -= moveSpeed;
+		move.z -= normalMoveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_A))
 	{
-		move.x -= moveSpeed;
+		move.x -= normalMoveSpeed;
 	}
 	if (CheckHitKey(KEY_INPUT_D))
 	{
-		move.x += moveSpeed;
+		move.x += normalMoveSpeed;
 	}
 	if ((move.x != 0) || (move.z != 0))
 	{
 		VECTOR direction = VNorm(move);
 		move = VScale(direction, moveSpeed);
-		walkTime += walkAnimSpeed * deltaTime;
+		walkTime += walkSpeed * deltaTime;
 		if (walkTime > GetWalkType().totalTime)
 		{
 			walkTime = 0.0f;
@@ -91,7 +107,7 @@ void Player::Move(VECTOR move,float deltaTime)
 
 void Player::Attack(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && attackKeyNotPressed && !isDrawing)
+	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && attackKeyNotPressed && !isDrawing && isDrawn)
 	{
 		isAttacking = true;
 		MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 1.0f);

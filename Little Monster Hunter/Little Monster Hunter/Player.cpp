@@ -8,6 +8,8 @@ Player::Player()
 	drawAnim = LoadAnim("Resource/Draw A Great Sword 2.mv1");
 	attackAnim = LoadAnim("Resource/Great Sword Slash 2.mv1");
 	walkAnim = LoadAnim("Resource/Catwalk Walk Forward HighKnees.mv1");
+	drawWalkAnim = LoadAnim("Resource/Great Sword Walk.mv1");
+	sheathAnim = LoadAnim("Resource/Sheath A Great Sword 1.mv1");
 	MV1SetPosition(modelHandle, modelPos);
 
 	/***Å‰‚ÌƒuƒŒƒ“ƒh—¦‚ğİ’è‚·‚é***/
@@ -23,6 +25,8 @@ Player::~Player()
 	MV1DeleteModel(walkAnim.handle);
 	MV1DeleteModel(attackAnim.handle);
 	MV1DeleteModel(drawAnim.handle);
+	MV1DeleteModel(drawWalkAnim.handle);
+	MV1DeleteModel(sheathAnim.handle);
 }
 
 void Player::Update(float deltaTime)

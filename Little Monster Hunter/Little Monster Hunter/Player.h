@@ -38,6 +38,8 @@ private:
 	AnimData drawAnim;//抜刀アニメのデータ
 	AnimData attackAnim;//攻撃アニメのデータ
 	AnimData walkAnim;//歩行アニメのデータ
+	AnimData sheathAnim;//納刀アニメのデータ
+	AnimData drawWalkAnim;//抜刀歩行アニメのデータ
 	int rightHandFrame = -1;//右手のフレーム番号
 
 	/***位置と向き***/

@@ -69,12 +69,12 @@ private:
 	/***調整用の値***/
 	VECTOR localBladeTip = VGet(107, 79, 14);//手のフレームから見た剣先の位置
 	float capsuleRadius = 20.0f;//剣の判定（カプセル）の半径
-	float normalMoveSpeed = 1000.0f; // 移動速度
-	float drawMoveSpeed = 500.0f;//抜刀時の移動速度
+	float normalMoveSpeed = 500.0f; // 移動速度
+	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
 	float  attackStartValue = 0.48f; //判定が有効になり始める進行度（０から１）
 	float attackEndValue = 0.62f; //判定が有効な最後の進行度（０から１）
-	float walkAnimSpeed = 36.4f;//毎秒進める歩行アニメの速さ
-	float drawWalkAnimSpeed = walkAnimSpeed / 2;//毎秒進める抜刀歩行アニメの速さ
+	float walkAnimSpeed = 27.0f;//毎秒進める歩行アニメの速さ
+	float drawWalkAnimSpeed = walkAnimSpeed; // 2;//毎秒進める抜刀歩行アニメの速さ
 	float attackAnimSpeed = 0.5f;//攻撃アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	float drawAnimSpeed = 0.5f;//抜刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	float Time = 0;

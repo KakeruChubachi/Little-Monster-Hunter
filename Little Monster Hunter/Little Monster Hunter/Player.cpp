@@ -7,8 +7,8 @@ Player::Player()
 	modelHandle = MV1LoadModel("Resource/character.mv1");
 	drawAnim = LoadAnim("Resource/Draw A Great Sword 2.mv1");
 	attackAnim = LoadAnim("Resource/Great Sword Slash 2.mv1");
-	walkAnim = LoadAnim("Resource/Catwalk Walk Forward HighKnees.mv1");
-	drawWalkAnim = LoadAnim("Resource/Great Sword Walk.mv1");
+	walkAnim = LoadAnim("Resource/Walking_1.mv1");
+	drawWalkAnim = LoadAnim("Resource/Great_Sword_Walk_3.mv1");
 	sheathAnim = LoadAnim("Resource/Sheath A Great Sword 1.mv1");
 	MV1SetPosition(modelHandle, modelPos);
 

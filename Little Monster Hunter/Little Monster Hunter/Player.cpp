@@ -17,6 +17,10 @@ Player::Player()
 
 	/***‰EŽè‚ÌƒtƒŒ[ƒ€”Ô†‚ð’T‚·***/
 	rightHandFrame = MV1SearchFrame(modelHandle, "mixamorig:RightHand");
+
+	meshCount = MV1GetMeshNum(modelHandle);
+	swordMesh = 1;
+	MV1SetMeshVisible(modelHandle, swordMesh, FALSE);
 }
 
 Player::~Player()
@@ -31,16 +35,16 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	if(!isAttacking && !isDrawing)
+	if(!isAttacking && !isDrawing && !isSheathing)
 	{
 		Move(VGet(0, 0, 0), deltaTime);
 	}
 	Attack(deltaTime);
 	UpdateDraw(deltaTime);
+	UpdateSheath(deltaTime);
 	ApplyAnimTimes();
 	ApplyRotation();
 	UpdateBladeTip();
-	Time += deltaTime;
 }
 
 
@@ -53,7 +57,7 @@ void Player::Draw()
 		DrawCapsule3D(judgePos, bladeTip,capsuleRadius, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
 	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
-	DrawFormatString(10, 70, GetColor(255, 255, 255), "Time:%.2f", Time);
+	DrawFormatString(10, 70, GetColor(255, 255, 255), "MeshNum: %d", meshCount);
 }
 
 void Player::Move(VECTOR move,float deltaTime)
@@ -156,6 +160,7 @@ void Player::UpdateDraw(float deltaTime)
 	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking && !isDrawn)
 	{
 		isDrawing = true;
+		MV1SetMeshVisible(modelHandle, swordMesh, TRUE);
 		drawProgress = 0.0f;
 		MV1SetAttachAnimBlendRate(modelHandle, drawAnim.attach, 1.0f);
 		MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 0.0f);
@@ -175,6 +180,33 @@ void Player::UpdateDraw(float deltaTime)
 		}
 	}
 	drawKeyNotPressed = !CheckHitKey(KEY_INPUT_R);
+}
+
+void Player::UpdateSheath(float deltaTime)
+{
+	if (CheckHitKey(KEY_INPUT_F) && !isSheathing && sheathKeyNotPressed && !isAttacking && isDrawn)
+	{
+		isSheathing = true;
+		sheathProgress = 0.0f;
+		MV1SetAttachAnimBlendRate(modelHandle, sheathAnim.attach, 1.0f);
+		MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 0.0f);
+	}
+	if (isSheathing)
+	{
+		sheathProgress += sheathAnimSpeed * deltaTime;
+		float sheathSwordTime = sheathProgress * sheathAnim.totalTime;
+		MV1SetAttachAnimTime(modelHandle, sheathAnim.attach, sheathSwordTime);
+		if (sheathProgress >= 1.0)
+		{
+			isSheathing = false;
+			isDrawn = false;
+			MV1SetMeshVisible(modelHandle, swordMesh, FALSE);
+			MV1SetAttachAnimBlendRate(modelHandle, sheathAnim.attach, 0.0f);
+			MV1SetAttachAnimBlendRate(modelHandle, GetWalkType().attach, 1.0f);
+			sheathProgress = 0.0f;
+		}
+	}
+	sheathKeyNotPressed = !CheckHitKey(KEY_INPUT_F);
 }
 
 void Player::ApplyAnimTimes()

@@ -18,10 +18,11 @@ public:
 	void Draw();
 	VECTOR GetPos() { return modelPos; }
 	bool IsAttacking() const { return isAttacking; } // UŒ‚’†‚©‚Ç‚¤‚©‚ðŽæ“¾‚·‚éŠÖ”
-	bool IsDecisionValid() const { return (isAttacking && (attackProgress >= attackStartValue) && (attackProgress <= attackEndValue)); }
+	bool IshitActive() const { return (isAttacking && (attackProgress >= attackStartValue) && (attackProgress <= attackEndValue)); }
 	VECTOR GetJudgePos() const { return judgePos; } // UŒ‚”»’è‚ÌˆÊ’u‚ðŽæ“¾‚·‚éŠÖ”
 	VECTOR GetWorldBladeTipPos() const { return bladeTip; }
 	float GetCapsuleRad() const { return capsuleRadius; }
+	float GetAttackProgress() const { return attackProgress; } // UŒ‚‚Ìis“x‚ðŽæ“¾‚·‚éŠÖ”
 private:
 	/*ŠÖ”*/
 	void Move(VECTOR move, float deltaTime);
@@ -83,8 +84,8 @@ private:
 	float attackAnimSpeed = 0.5f;//UŒ‚ƒAƒjƒ‚Ìi‚ß‚é‘¬‚³(1/•b”)(0.5‚È‚ç‘S‘Ì‚Å2•b)
 	float drawAnimSpeed = 0.5f;//”²“ƒAƒjƒ‚Ìi‚ß‚é‘¬‚³(1/•b”)(0.5‚È‚ç‘S‘Ì‚Å2•b)
 	float sheathAnimSpeed = 0.5f;//”[“ƒAƒjƒ‚Ìi‚ß‚é‘¬‚³(1/•b”)(0.5‚È‚ç‘S‘Ì‚Å2•b)
-	float Time = 0;
-	int meshCount = 0;
-	int swordMesh = -1;
+	float Time = 0;//Œo‰ßŽžŠÔ
+	int meshCount = 0;//ƒƒbƒVƒ…‚Ì”
+	int swordMesh = -1;//Œ•‚ÌƒƒbƒVƒ…”Ô†
 };
 

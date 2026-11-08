@@ -52,7 +52,7 @@ void Player::Draw()
 {
 	
 	MV1DrawModel(modelHandle);
-	if (IsDecisionValid())
+	if (IshitActive())
 	{
 		DrawCapsule3D(judgePos, bladeTip,capsuleRadius, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}

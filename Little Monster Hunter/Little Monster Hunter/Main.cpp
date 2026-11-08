@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		player.Update(deltaTime);
 		bool hitCheck = HitCheck_Sphere_Capsule(target.GetPos(), target.GetRadius(), player.GetJudgePos(), player.GetWorldBladeTipPos(), player.GetCapsuleRad());
 		bool attack = player.IsAttacking();
-		bool attackHit = player.IsDecisionValid() && hitCheck;
+		bool attackHit = player.IshitActive() && hitCheck;
 		if(attackHit)
 		{
 			target.TakeDamage(10.0f);
@@ -53,6 +53,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		target.Draw(attackHit);
 		target.TargetHpDraw();
 		player.Draw();
+		DrawFormatString(10, 90, GetColor(255, 255, 255), "Progress: %.2f", player.GetAttackProgress());
+		DrawFormatString(10, 110, GetColor(255, 255, 255), "HitActive: %d", player.IshitActive());
+		DrawFormatString(10, 130, GetColor(255, 255, 255), "HitCheck: %d", hitCheck);
 		ScreenFlip();
 	}
 	DxLib_End();

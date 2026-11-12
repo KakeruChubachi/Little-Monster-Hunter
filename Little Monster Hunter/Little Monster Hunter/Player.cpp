@@ -19,7 +19,7 @@ Player::Player()
 	rightHandFrame = MV1SearchFrame(modelHandle, "mixamorig:RightHand");
 
 	meshCount = MV1GetMeshNum(modelHandle);
-	swordMesh = 1;
+	swordMesh = 1;// 剣のメッシュ番号。MeshNumの表示で確認した
 	MV1SetMeshVisible(modelHandle, swordMesh, FALSE);
 }
 
@@ -50,7 +50,6 @@ void Player::Update(float deltaTime)
 
 void Player::Draw()
 {
-	
 	MV1DrawModel(modelHandle);
 	if (IshitActive())
 	{
@@ -111,7 +110,7 @@ void Player::Move(VECTOR move,float deltaTime)
 
 void Player::Attack(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && attackKeyNotPressed && !isDrawing && isDrawn)
+	if (CheckHitKey(KEY_INPUT_SPACE) && !isAttacking && attackKeyNotPressed && !isDrawing && isDrawn && !isSheathing)
 	{
 		isAttacking = true;
 		MV1SetAttachAnimBlendRate(modelHandle, attackAnim.attach, 1.0f);
@@ -157,7 +156,7 @@ AnimData Player::LoadAnim(const char* path)
 
 void Player::UpdateDraw(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking && !isDrawn)
+	if (CheckHitKey(KEY_INPUT_R) && !isDrawing && drawKeyNotPressed && !isAttacking && !isDrawn && !isSheathing)
 	{
 		isDrawing = true;
 		MV1SetMeshVisible(modelHandle, swordMesh, TRUE);
@@ -184,7 +183,7 @@ void Player::UpdateDraw(float deltaTime)
 
 void Player::UpdateSheath(float deltaTime)
 {
-	if (CheckHitKey(KEY_INPUT_F) && !isSheathing && sheathKeyNotPressed && !isAttacking && isDrawn)
+	if (CheckHitKey(KEY_INPUT_F) && !isSheathing && sheathKeyNotPressed && !isAttacking && isDrawn && !isDrawing && !isAttacking)
 	{
 		isSheathing = true;
 		sheathProgress = 0.0f;

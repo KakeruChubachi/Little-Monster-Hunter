@@ -24,6 +24,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	LONGLONG frontFrameTime = GetNowHiPerformanceCount(); // 前フレームの時間
 	LONGLONG nowTime = GetNowHiPerformanceCount(); // 現在の時間
+	float hitStopTime = 0.0f;//攻撃がヒットしたときに止める時間
+	bool isBeforeHit = false;//前フレームでヒットしていたかどうか
 
 	// メインループ
 	while (ProcessMessage() == 0)
@@ -31,13 +33,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		nowTime = GetNowHiPerformanceCount();
 		float deltaTime = (nowTime - frontFrameTime) / 1000000.0f; // 前フレームからの経過時間
 		frontFrameTime = nowTime;
+		if(hitStopTime > 0.0f)
+		{
+			hitStopTime -= deltaTime;
+			deltaTime = 0.0f;
+		}
+		else
+		{
+			hitStopTime = 0.0f;
+		}
 		player.Update(deltaTime);
 		bool hitCheck = HitCheck_Sphere_Capsule(target.GetPos(), target.GetRadius(), player.GetJudgePos(), player.GetWorldBladeTipPos(), player.GetCapsuleRad());
 		bool attack = player.IsAttacking();
 		bool attackHit = player.IshitActive() && hitCheck;
-		if(attackHit)
+		if(attackHit && !isBeforeHit)
 		{
 			target.TakeDamage(10.0f);
+			hitStopTime = 0.1f;
 		}
 		else if(!attack)
 		{
@@ -57,6 +69,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		DrawFormatString(10, 110, GetColor(255, 255, 255), "HitActive: %d", player.IshitActive());
 		DrawFormatString(10, 130, GetColor(255, 255, 255), "HitCheck: %d", hitCheck);
 		ScreenFlip();
+		isBeforeHit = attackHit;
 	}
 	DxLib_End();
 	return 0;

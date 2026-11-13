@@ -1,11 +1,19 @@
 #pragma once
 #include "DxLib.h"
 
+enum class TargetAttackState
+{
+	Moving,
+	SetUp,
+	Attacking,
+};
+
 class Target
 {
 public:
 	void Draw(bool attackHit);
 	void Update(float deltaTime, VECTOR playerPos);
+	void TargetAttack(float deltaTime, VECTOR playerPos);
 	VECTOR GetPos() const { return targetPos; } // ターゲットの位置を取得する関数
 	float GetRadius() const { return targetRadius; } // ターゲットの半径を取得する関数
 	void TakeDamage(float damage);
@@ -20,5 +28,9 @@ private:
 	float moveSpeed = 50.0f; // ターゲットの移動速度
 	VECTOR moveDirection = VGet(0, 0, 0); // ターゲットの移動方向
 	float stopDistance = 80.0f; // プレイヤーとの距離
+	TargetAttackState attackState = TargetAttackState::Moving; // ターゲットの攻撃状態
+	float stateTime = 0.0f; // 攻撃準備の時間
+	float attackStartTime = 0.5f; // 攻撃開始までの時間
+	float attackDuration = 0.5f; // 攻撃の持続時間
 };
 

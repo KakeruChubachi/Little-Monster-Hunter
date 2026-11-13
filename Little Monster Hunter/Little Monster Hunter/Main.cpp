@@ -62,6 +62,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		SetCameraPositionAndTarget_UpVecY(cameraPos,cameraPoint);
 		gridLine.Draw();
 		DrawFormatString(10, 10, GetColor(255, 255, 255), "Delta Time: %.6f seconds", deltaTime);
+		target.Update(deltaTime, playerPos);
 		target.Draw(attackHit);
 		target.TargetHpDraw();
 		player.Draw();

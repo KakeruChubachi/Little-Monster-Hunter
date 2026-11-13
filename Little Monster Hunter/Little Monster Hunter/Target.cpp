@@ -15,6 +15,20 @@ void Target::Draw(bool attack)
 	DrawSphere3D(targetPos, targetRadius, 16, color, GetColor(255, 255, 255), TRUE);
 }
 
+void Target::Update(float deltaTime, VECTOR playerPos)
+{
+	moveDirection = VSub(playerPos, targetPos); // プレイヤーの位置に向かう方向を計算
+	moveDirection.y = 0; // y方向の移動を無効化
+	float distance = VSize(moveDirection); // プレイヤーとの距離を計算
+	if (distance < stopDistance)
+	{
+		return; // プレイヤーとの距離が近すぎる場合は移動しない
+	}
+	moveDirection = VNorm(moveDirection); // 正規化して単位ベクトルにする
+	VECTOR moveStep = VScale(moveDirection, moveSpeed * deltaTime); // 移動量を計算
+	targetPos = VAdd(targetPos, moveStep); // ターゲットの位置を更新
+}
+
 void Target::TakeDamage(float damage)
 {
 	if(!isHitThisAttack) //まだヒットしていない場合のみ

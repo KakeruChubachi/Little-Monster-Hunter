@@ -5,6 +5,7 @@ class Target
 {
 public:
 	void Draw(bool attackHit);
+	void Update(float deltaTime, VECTOR playerPos);
 	VECTOR GetPos() const { return targetPos; } // ターゲットの位置を取得する関数
 	float GetRadius() const { return targetRadius; } // ターゲットの半径を取得する関数
 	void TakeDamage(float damage);
@@ -16,5 +17,8 @@ private:
 	float targetRadius = 50.0f; // ターゲットの半径
 	float targetHp = 100.0f; // ターゲットの体力
 	bool isHitThisAttack = false; // 今回の攻撃でヒットしたかどうか
+	float moveSpeed = 50.0f; // ターゲットの移動速度
+	VECTOR moveDirection = VGet(0, 0, 0); // ターゲットの移動方向
+	float stopDistance = 80.0f; // プレイヤーとの距離
 };
 

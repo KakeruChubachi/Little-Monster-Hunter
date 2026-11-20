@@ -25,6 +25,7 @@ public:
 	float GetAttackProgress() const { return attackProgress; } // 攻撃の進行度を取得する関数
 	void TakeDamage(int damage);
 	void PlayerResetHit() { isDamagedThisAttack = false; }
+	bool IsDead() const { return playerHp <= 0; }
 private:
 	/*関数*/
 	void Move(VECTOR move, float deltaTime);
@@ -92,6 +93,6 @@ private:
 	/*PlayerStatus*/
 	float normalMoveSpeed = 500.0f; // 移動速度
 	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
-	int playerHp = 100;//プレイヤーの体力
+	int playerHp = 10;//プレイヤーの体力
 };
 

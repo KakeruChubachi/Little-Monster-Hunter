@@ -23,6 +23,8 @@ public:
 	VECTOR GetWorldBladeTipPos() const { return bladeTip; }
 	float GetCapsuleRad() const { return capsuleRadius; }
 	float GetAttackProgress() const { return attackProgress; } // 攻撃の進行度を取得する関数
+	void TakeDamage(int damage);
+	void PlayerResetHit() { isDamagedThisAttack = false; }
 private:
 	/*関数*/
 	void Move(VECTOR move, float deltaTime);
@@ -75,8 +77,6 @@ private:
 	/*調整用の値*/
 	VECTOR localBladeTip = VGet(107, 79, 14);//手のフレームから見た剣先の位置
 	float capsuleRadius = 20.0f;//剣の判定（カプセル）の半径
-	float normalMoveSpeed = 500.0f; // 移動速度
-	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
 	float  attackStartValue = 0.48f; //判定が有効になり始める進行度（０から１）
 	float attackEndValue = 0.62f; //判定が有効な最後の進行度（０から１）
 	float walkAnimSpeed = 27.0f;//毎秒進める歩行アニメの速さ
@@ -87,5 +87,11 @@ private:
 	float Time = 0;//経過時間
 	int meshCount = 0;//メッシュの数
 	int swordMesh = -1;//剣のメッシュ番号
+	bool isDamagedThisAttack = false;
+	
+	/*PlayerStatus*/
+	float normalMoveSpeed = 500.0f; // 移動速度
+	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
+	int playerHp = 100;//プレイヤーの体力
 };
 

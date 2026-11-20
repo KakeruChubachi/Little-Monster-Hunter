@@ -56,7 +56,20 @@ void Player::Draw()
 		DrawCapsule3D(judgePos, bladeTip,capsuleRadius, 16, GetColor(0, 255, 255), GetColor(255, 255, 255), FALSE);
 	}
 	DrawFormatString(10, 30, GetColor(255, 255, 255), "AttackProgress:%.2f", attackProgress);
-	DrawFormatString(10, 70, GetColor(255, 255, 255), "MeshNum: %d", meshCount);
+	DrawFormatString(10, 70, GetColor(255, 255, 255), "PlayerHp:%d", playerHp);
+}
+
+void Player::TakeDamage(int damage)
+{
+	if (!isDamagedThisAttack)
+	{
+		playerHp -= damage;
+		if (playerHp < 0)
+		{
+			playerHp = 0;
+		}
+		isDamagedThisAttack = true;
+	}
 }
 
 void Player::Move(VECTOR move,float deltaTime)

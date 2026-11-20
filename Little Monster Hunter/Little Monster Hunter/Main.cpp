@@ -63,6 +63,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		gridLine.Draw();
 		DrawFormatString(10, 10, GetColor(255, 255, 255), "Delta Time: %.6f seconds", deltaTime);
 		target.Update(deltaTime, playerPos);
+		if(target.TargetIsAttacking())
+		{
+			VECTOR attackDirection = VSub(target.GetPos(),playerPos);
+			attackDirection.y = 0;
+			float attackDistance = VSize(attackDirection);
+			float stopDirection = 80;
+			if (attackDistance <= stopDirection)
+			{
+				player.TakeDamage(30);
+			}
+			DrawString(10,150,"Attacking", GetColor(255, 255, 255));
+		}
+		else
+		{
+			player.PlayerResetHit();
+		}
 		target.Draw(attackHit);
 		target.TargetHpDraw();
 		player.Draw();

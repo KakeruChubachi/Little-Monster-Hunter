@@ -13,7 +13,7 @@ class Target
 public:
 	void Draw(bool attackHit);
 	void Update(float deltaTime, VECTOR playerPos);
-	void TargetAttack(float deltaTime, VECTOR playerPos);
+	bool TargetIsAttacking() const { return attackState == TargetAttackState::Attacking; }
 	VECTOR GetPos() const { return targetPos; } // ターゲットの位置を取得する関数
 	float GetRadius() const { return targetRadius; } // ターゲットの半径を取得する関数
 	void TakeDamage(float damage);

@@ -18,7 +18,6 @@ Player::Player()
 	/***右手のフレーム番号を探す***/
 	rightHandFrame = MV1SearchFrame(modelHandle, "mixamorig:RightHand");
 
-	meshCount = MV1GetMeshNum(modelHandle);
 	swordMesh = 1;// 剣のメッシュ番号。MeshNumの表示で確認した
 	MV1SetMeshVisible(modelHandle, swordMesh, FALSE);
 }

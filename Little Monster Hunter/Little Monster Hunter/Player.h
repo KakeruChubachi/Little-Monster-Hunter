@@ -85,9 +85,7 @@ private:
 	float attackAnimSpeed = 0.5f;//攻撃アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	float drawAnimSpeed = 0.5f;//抜刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	float sheathAnimSpeed = 0.5f;//納刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
-	float Time = 0;//経過時間
-	int meshCount = 0;//メッシュの数
-	int swordMesh = -1;//剣のメッシュ番号
+	int swordMesh = -1;//MV1SetMeshVisible で、体の方を消して、見た目で確認した
 	bool isDamagedThisAttack = false;
 	
 	/*PlayerStatus*/

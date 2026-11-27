@@ -23,7 +23,7 @@ public:
 private:
 	VECTOR targetPos = VGet(0, 50, 100); // ターゲットの位置
 	float targetRadius = 50.0f; // ターゲットの半径
-	float targetHp = 10.0f; // ターゲットの体力
+	float targetHp = 100.0f; // ターゲットの体力
 	bool isHitThisAttack = false; // 今回の攻撃でヒットしたかどうか
 	float moveSpeed = 50.0f; // ターゲットの移動速度
 	VECTOR moveDirection = VGet(0, 0, 0); // ターゲットの移動方向

@@ -93,6 +93,6 @@ private:
 	/*PlayerStatus*/
 	float normalMoveSpeed = 500.0f; // 移動速度
 	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
-	int playerHp = 10;//プレイヤーの体力
+	int playerHp = 100;//プレイヤーの体力
 };
 

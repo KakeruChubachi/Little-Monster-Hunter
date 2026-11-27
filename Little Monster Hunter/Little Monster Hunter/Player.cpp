@@ -34,7 +34,7 @@ Player::~Player()
 
 void Player::Update(float deltaTime)
 {
-	if(!isAttacking && !isDrawing && !isSheathing)
+	if(!isAttacking && !isDrawing && !isSheathing && !isAvoiding)
 	{
 		Move(VGet(0, 0, 0), deltaTime);
 	}
@@ -44,6 +44,7 @@ void Player::Update(float deltaTime)
 	ApplyAnimTimes();
 	ApplyRotation();
 	UpdateBladeTip();
+	UpdateAvoidance(deltaTime);
 }
 
 
@@ -69,6 +70,32 @@ void Player::TakeDamage(int damage)
 		}
 		isDamagedThisAttack = true;
 	}
+}
+
+void Player::UpdateAvoidance(float deltaTime)
+{
+	if (CheckHitKey(KEY_INPUT_LSHIFT) && !isAttacking && !isDrawing && !isSheathing && !isAvoiding && avoidanceNotPressed)
+	{
+		isAvoiding = true;
+		avoidanceTime = 0.0f;
+		avoidanceDirection = VGet(sinf(yRadius), 0, cosf(yRadius));
+	}
+	if (isAvoiding)
+	{
+		avoidanceTime += deltaTime;
+		float avoidanceRatio = 1 - (avoidanceTime / avoidanceLength);//âÒîë¨ìxÇÃäÑçá
+		if (avoidanceRatio < 0.0f)
+		{
+			avoidanceRatio = 0.0f;
+		}
+		modelPos = VAdd(modelPos ,VScale(avoidanceDirection, avoidanceSpeed * avoidanceRatio * deltaTime));
+		MV1SetPosition(modelHandle, modelPos);
+		if (avoidanceLength <= avoidanceTime)
+		{
+			isAvoiding = false;
+		}
+	}
+	avoidanceNotPressed = !CheckHitKey(KEY_INPUT_LSHIFT);
 }
 
 void Player::Move(VECTOR move,float deltaTime)

@@ -38,6 +38,7 @@ private:
 	void ApplyAnimTimes();//攻撃と歩行のアニメの時間を設定
 	void ApplyRotation();//回転を設定
 	void UpdateBladeTip();//手の位置とワールドの剣先を更新
+	void UpdateAvoidance(float deltaTime);
 
 	/*リソース*/
 	int modelHandle = -1;// モデルのハンドル
@@ -74,6 +75,7 @@ private:
 	bool drawKeyNotPressed = true;//Rキーが押されてないか
 	bool sheathKeyNotPressed = true;//Fキーが押されてないか
 	bool attackKeyNotPressed = true; // 攻撃キーが押されていないかどうか
+	bool avoidanceNotPressed = true;//回避キーが押されていないか
 
 	/*調整用の値*/
 	VECTOR localBladeTip = VGet(107, 79, 14);//手のフレームから見た剣先の位置
@@ -86,11 +88,18 @@ private:
 	float drawAnimSpeed = 0.5f;//抜刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	float sheathAnimSpeed = 0.5f;//納刀アニメの進める速さ(1/秒数)(0.5なら全体で2秒)
 	int swordMesh = -1;//MV1SetMeshVisible で、体の方を消して、見た目で確認した
-	bool isDamagedThisAttack = false;
-	
+	bool isDamagedThisAttack = false;//攻撃を受けているか
+	float avoidanceLength = 0.2f;//回避の長さ
+	float avoidanceSpeed = 1000.0f;//回避速度
+
 	/*PlayerStatus*/
 	float normalMoveSpeed = 500.0f; // 移動速度
 	float drawMoveSpeed = 250.0f;//抜刀時の移動速度
 	int playerHp = 100;//プレイヤーの体力
+	
+	//回避の状態
+	bool isAvoiding = false;//回避中かどうか
+	float avoidanceTime = 0.0f;//回避経過時間
+	VECTOR avoidanceDirection = VGet(0, 0, 0);
 };
 
